@@ -28,7 +28,7 @@ public abstract class GunItem extends Item {
     public static final int LOADING_STAGE_1 = 5;
     public static final int LOADING_STAGE_2 = 10;
     public static final int LOADING_STAGE_3 = 20;
-    public static final int RELOAD_DURATION = 30;
+    public static int RELOAD_DURATION;
 
     // for RenderHelper
     public static ItemStack activeMainHandStack;

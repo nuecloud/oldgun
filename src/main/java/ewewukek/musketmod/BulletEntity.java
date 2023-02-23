@@ -35,7 +35,7 @@ public class BulletEntity extends AbstractHurtingProjectile {
     public static final double GRAVITY = 0.05;
     public static final double AIR_FRICTION = 0.99;
     public static final double WATER_FRICTION = 0.6;
-    public static final short LIFETIME = 50;
+    public static final short LIFETIME = 200;
 
     public static double maxDistance;
 

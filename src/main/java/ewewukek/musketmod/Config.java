@@ -18,6 +18,8 @@ public class Config {
 
     public double bulletMaxDistance;
 
+    public double reloadDuration;
+
     public double bulletStdDev;
     public double bulletSpeed;
     public double damageMin;
@@ -33,6 +35,7 @@ public class Config {
         INSTANCE.load();
 
         BulletEntity.maxDistance = INSTANCE.bulletMaxDistance;
+        GunItem.RELOAD_DURATION = (int)INSTANCE.reloadDuration;
 
         MusketItem.bulletStdDev = (float)Math.toRadians(INSTANCE.bulletStdDev);
         MusketItem.bulletSpeed = (float)(INSTANCE.bulletSpeed / 20);
@@ -51,6 +54,7 @@ public class Config {
 
     private void setDefaults() {
         bulletMaxDistance = 256;
+        reloadDuration = 200;
 
         bulletStdDev = 1;
         bulletSpeed = 180;
@@ -59,8 +63,8 @@ public class Config {
 
         pistolBulletStdDev = 1.5;
         pistolBulletSpeed = 140;
-        pistolDamageMin = 12;
-        pistolDamageMax = 12.5;
+        pistolDamageMin = 13;
+        pistolDamageMax = 14;
     }
 
     private void load() {
@@ -99,6 +103,9 @@ public class Config {
                         break;
                     case "bulletMaxDistance":
                         bulletMaxDistance = value;
+                        break;
+                    case "reloadDuration":
+                        reloadDuration = value;
                         break;
                     case "bulletStdDev":
                         bulletStdDev = value;
@@ -151,6 +158,9 @@ public class Config {
             writer.write("\n");
             writer.write("# Maximum bullet travel distance (in blocks)\n");
             writer.write("bulletMaxDistance = "+bulletMaxDistance+"\n");
+            writer.write("\n");
+            writer.write("# Reload duration (in ticks)\n");
+            writer.write("reloadDuration = "+reloadDuration+"\n");
             writer.write("\n");
             writer.write("# Musket\n");
             writer.write("\n");
