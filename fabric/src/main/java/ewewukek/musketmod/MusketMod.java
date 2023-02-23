@@ -45,6 +45,7 @@ public class MusketMod implements ModInitializer {
         Registry.register(Registry.ITEM, new ResourceLocation(MODID, "musket"), Items.MUSKET);
         Registry.register(Registry.ITEM, new ResourceLocation(MODID, "musket_with_bayonet"), Items.MUSKET_WITH_BAYONET);
         Registry.register(Registry.ITEM, new ResourceLocation(MODID, "pistol"), Items.PISTOL);
+        Registry.register(Registry.ITEM, new ResourceLocation(MODID, "rifle"), Items.RIFLE);
         Registry.register(Registry.ITEM, new ResourceLocation(MODID, "cartridge"), Items.CARTRIDGE);
 
         Registry.register(Registry.ENTITY_TYPE, new ResourceLocation(MODID, "bullet"), BULLET_ENTITY_TYPE);

@@ -20,10 +20,15 @@ public class Config {
 
     public double reloadDuration;
 
-    public double bulletStdDev;
-    public double bulletSpeed;
-    public double damageMin;
-    public double damageMax;
+    public double musketBulletStdDev;
+    public double musketBulletSpeed;
+    public double musketDamageMin;
+    public double musketDamageMax;
+
+    public double rifleBulletStdDev;
+    public double rifleBulletSpeed;
+    public double rifleDamageMin;
+    public double rifleDamageMax;
 
     public double pistolBulletStdDev;
     public double pistolBulletSpeed;
@@ -37,11 +42,17 @@ public class Config {
         BulletEntity.maxDistance = INSTANCE.bulletMaxDistance;
         GunItem.RELOAD_DURATION = (int)INSTANCE.reloadDuration;
 
-        MusketItem.bulletStdDev = (float)Math.toRadians(INSTANCE.bulletStdDev);
-        MusketItem.bulletSpeed = (float)(INSTANCE.bulletSpeed / 20);
+        MusketItem.bulletStdDev = (float)Math.toRadians(INSTANCE.musketBulletStdDev);
+        MusketItem.bulletSpeed = (float)(INSTANCE.musketBulletSpeed / 20);
         double maxEnergy = MusketItem.bulletSpeed * MusketItem.bulletSpeed;
-        MusketItem.damageMultiplierMin = (float)(INSTANCE.damageMin / maxEnergy);
-        MusketItem.damageMultiplierMax = (float)(INSTANCE.damageMax / maxEnergy);
+        MusketItem.damageMultiplierMin = (float)(INSTANCE.musketDamageMin / maxEnergy);
+        MusketItem.damageMultiplierMax = (float)(INSTANCE.musketDamageMax / maxEnergy);
+
+        RifleItem.bulletStdDev = (float)Math.toRadians(INSTANCE.rifleBulletStdDev);
+        RifleItem.bulletSpeed = (float)(INSTANCE.rifleBulletSpeed / 20);
+        maxEnergy = RifleItem.bulletSpeed * RifleItem.bulletSpeed;
+        RifleItem.damageMultiplierMin = (float)(INSTANCE.rifleDamageMax / maxEnergy);
+        RifleItem.damageMultiplierMax = (float)(INSTANCE.rifleDamageMax / maxEnergy);
 
         PistolItem.bulletStdDev = (float)Math.toRadians(INSTANCE.pistolBulletStdDev);
         PistolItem.bulletSpeed = (float)(INSTANCE.pistolBulletSpeed / 20);
@@ -56,10 +67,15 @@ public class Config {
         bulletMaxDistance = 256;
         reloadDuration = 200;
 
-        bulletStdDev = 1;
-        bulletSpeed = 180;
-        damageMin = 20.5;
-        damageMax = 21;
+        musketBulletStdDev = 1;
+        musketBulletSpeed = 220;
+        musketDamageMin = 20.5;
+        musketDamageMax = 21.5;
+
+        rifleBulletStdDev = 0.2;
+        rifleBulletSpeed = 210;
+        rifleDamageMin = 20;
+        rifleDamageMax = 21;
 
         pistolBulletStdDev = 1.5;
         pistolBulletSpeed = 140;
@@ -107,17 +123,29 @@ public class Config {
                     case "reloadDuration":
                         reloadDuration = value;
                         break;
-                    case "bulletStdDev":
-                        bulletStdDev = value;
+                    case "musketBulletStdDev":
+                        musketBulletStdDev = value;
                         break;
-                    case "bulletSpeed":
-                        bulletSpeed = value;
+                    case "musketBulletSpeed":
+                        musketBulletSpeed = value;
                         break;
-                    case "damageMin":
-                        damageMin = value;
+                    case "musketDamageMin":
+                        musketDamageMin = value;
                         break;
-                    case "damageMax":
-                        damageMax = value;
+                    case "musketDamageMax":
+                        musketDamageMax = value;
+                        break;
+                    case "rifleBulletStdDev":
+                        rifleBulletStdDev = value;
+                        break;
+                    case "rifleBulletSpeed":
+                        rifleBulletSpeed = value;
+                        break;
+                    case "rifleDamageMin":
+                        rifleDamageMin = value;
+                        break;
+                    case "rifleDamageMax":
+                        rifleDamageMax = value;
                         break;
                     case "pistolBulletStdDev":
                         pistolBulletStdDev = value;
@@ -146,7 +174,7 @@ public class Config {
         if (version < VERSION) {
             logger.info("Configuration file belongs to older version, updating");
             if (version < 2) {
-                if (damageMax == 21.5) damageMax = 21;
+                if (musketDamageMax == 21.5) musketDamageMax = 21;
             }
             save();
         }
@@ -165,13 +193,24 @@ public class Config {
             writer.write("# Musket\n");
             writer.write("\n");
             writer.write("# Standard deviation of bullet spread (in degrees)\n");
-            writer.write("bulletStdDev = "+bulletStdDev+"\n");
+            writer.write("musketBulletStdDev = "+ musketBulletStdDev +"\n");
             writer.write("# Muzzle velocity of bullet (in blocks per second)\n");
-            writer.write("bulletSpeed = "+bulletSpeed+"\n");
+            writer.write("musketBulletSpeed = "+ musketBulletSpeed +"\n");
             writer.write("# Minimum damage at point-blank range\n");
-            writer.write("damageMin = "+damageMin+"\n");
+            writer.write("musketDamageMin = "+ musketDamageMin +"\n");
             writer.write("# Maximum damage at point-blank range\n");
-            writer.write("damageMax = "+damageMax+"\n");
+            writer.write("musketDamageMax = "+ musketDamageMax +"\n");
+            writer.write("\n");
+            writer.write("# Rifle\n");
+            writer.write("\n");
+            writer.write("# Standard deviation of bullet spread (in degrees)\n");
+            writer.write("rifleBulletStdDev = "+ rifleBulletStdDev +"\n");
+            writer.write("# Muzzle velocity of bullet (in blocks per second)\n");
+            writer.write("rifleBulletSpeed = "+ rifleBulletSpeed +"\n");
+            writer.write("# Minimum damage at point-blank range\n");
+            writer.write("rifleDamageMin = "+ rifleDamageMin +"\n");
+            writer.write("# Maximum damage at point-blank range\n");
+            writer.write("rifleDamageMax = "+ rifleDamageMax +"\n");
             writer.write("\n");
             writer.write("# Pistol\n");
             writer.write("\n");

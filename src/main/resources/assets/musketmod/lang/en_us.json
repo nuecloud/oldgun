@@ -3,5 +3,6 @@
   "item.musketmod.cartridge": "Paper Cartridge",
   "item.musketmod.musket": "Musket",
   "item.musketmod.musket_with_bayonet": "Musket with bayonet",
-  "item.musketmod.pistol": "Flintlock Pistol"
+  "item.musketmod.pistol": "Flintlock Pistol",
+  "item.musketmod.rifle": "Rifle"
 }

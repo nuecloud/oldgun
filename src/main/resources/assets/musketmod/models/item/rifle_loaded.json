@@ -1,0 +1,6 @@
+{
+  "parent": "musketmod:item/rifle",
+  "textures": {
+    "layer0": "musketmod:item/rifle_loaded"
+  }
+}
