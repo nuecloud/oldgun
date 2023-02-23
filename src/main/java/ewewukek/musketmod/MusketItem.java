@@ -14,11 +14,13 @@ public class MusketItem extends GunItem {
     public static final int DURABILITY = 150;
     public static final int BAYONET_DAMAGE = 4;
     public static final float BAYONET_SPEED = -2.0f;
-
     public static float bulletStdDev;
     public static float bulletSpeed;
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
+    public static int reloadDuration;
+
+
 
     public final Multimap<Attribute, AttributeModifier> bayonetAttributeModifiers;
 
@@ -54,6 +56,11 @@ public class MusketItem extends GunItem {
     @Override
     public float damageMultiplierMax() {
         return damageMultiplierMax;
+    }
+
+    @Override
+    public int reloadDuration() {
+        return reloadDuration;
     }
 
     @Override

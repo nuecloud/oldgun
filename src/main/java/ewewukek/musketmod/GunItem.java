@@ -42,6 +42,7 @@ public abstract class GunItem extends Item {
     public abstract float bulletSpeed();
     public abstract float damageMultiplierMin();
     public abstract float damageMultiplierMax();
+    public abstract int reloadDuration();
     public abstract SoundEvent fireSound();
     public abstract boolean twoHanded();
     public abstract boolean ignoreInvulnerableTime();
@@ -146,7 +147,7 @@ public abstract class GunItem extends Item {
             return;
         }
 
-        if (usingDuration >= RELOAD_DURATION && !isLoaded(stack)) {
+        if (usingDuration >= reloadDuration() && !isLoaded(stack)) {
             if (entity instanceof Player) {
                 Player player = (Player)entity;
                 if (!player.getAbilities().instabuild) {

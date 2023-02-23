@@ -4,11 +4,12 @@ import net.minecraft.sounds.SoundEvent;
 
 public class PistolItem extends GunItem {
     public static final int DURABILITY = 150;
-
     public static float bulletStdDev;
     public static float bulletSpeed;
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
+    public static int reloadDuration;
+
 
     public PistolItem(Properties properties) {
         super(properties.defaultDurability(DURABILITY));
@@ -32,6 +33,10 @@ public class PistolItem extends GunItem {
     @Override
     public float damageMultiplierMax() {
         return damageMultiplierMax;
+    }
+    @Override
+    public int reloadDuration() {
+        return reloadDuration;
     }
 
     @Override

@@ -17,6 +17,8 @@ public class RifleItem extends GunItem {
     public static float bulletSpeed;
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
+    public static int reloadDuration;
+
 
     public final Multimap<Attribute, AttributeModifier> bayonetAttributeModifiers;
 
@@ -52,6 +54,10 @@ public class RifleItem extends GunItem {
     @Override
     public float damageMultiplierMax() {
         return damageMultiplierMax;
+    }
+    @Override
+    public int reloadDuration() {
+        return reloadDuration;
     }
 
     @Override
