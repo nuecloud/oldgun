@@ -16,26 +16,33 @@ public class Config {
     public static final Config INSTANCE = new Config();
     public static final int VERSION = 2;
 
-    //general values
+    //General values
     public double bulletMaxDistance;
-    //musket values
+    //Musket values
     public double musketBulletStdDev;
     public double musketBulletSpeed;
     public double musketDamageMin;
     public double musketDamageMax;
     public double musketReloadDuration;
-    //rifle values
+    //Rifle values
     public double rifleBulletStdDev;
     public double rifleBulletSpeed;
     public double rifleDamageMin;
     public double rifleDamageMax;
     public double rifleReloadDuration;
-    //pistol values
+    //Pistol values
     public double pistolBulletStdDev;
     public double pistolBulletSpeed;
     public double pistolDamageMin;
     public double pistolDamageMax;
     public double pistolReloadDuration;
+    //Blunderbuss values
+    public double blunderbussBulletStdDev;
+    public double blunderbussBulletSpeed;
+    public double blunderbussPelletCount;
+    public double blunderbussDamageMin;
+    public double blunderbussDamageMax;
+    public double blunderbussReloadDuration;
 
     public static void reload() {
         INSTANCE.setDefaults();
@@ -45,6 +52,7 @@ public class Config {
 
         MusketItem.bulletStdDev = (float)Math.toRadians(INSTANCE.musketBulletStdDev);
         MusketItem.bulletSpeed = (float)(INSTANCE.musketBulletSpeed / 20);
+        MusketItem.pelletCount = 1;
         double maxEnergy = MusketItem.bulletSpeed * MusketItem.bulletSpeed;
         MusketItem.damageMultiplierMin = (float)(INSTANCE.musketDamageMin / maxEnergy);
         MusketItem.damageMultiplierMax = (float)(INSTANCE.musketDamageMax / maxEnergy);
@@ -52,6 +60,7 @@ public class Config {
 
         RifleItem.bulletStdDev = (float)Math.toRadians(INSTANCE.rifleBulletStdDev);
         RifleItem.bulletSpeed = (float)(INSTANCE.rifleBulletSpeed / 20);
+        RifleItem.pelletCount = 1;
         maxEnergy = RifleItem.bulletSpeed * RifleItem.bulletSpeed;
         RifleItem.damageMultiplierMin = (float)(INSTANCE.rifleDamageMax / maxEnergy);
         RifleItem.damageMultiplierMax = (float)(INSTANCE.rifleDamageMax / maxEnergy);
@@ -59,35 +68,51 @@ public class Config {
 
         PistolItem.bulletStdDev = (float)Math.toRadians(INSTANCE.pistolBulletStdDev);
         PistolItem.bulletSpeed = (float)(INSTANCE.pistolBulletSpeed / 20);
+        PistolItem.pelletCount = 1;
         maxEnergy = PistolItem.bulletSpeed * PistolItem.bulletSpeed;
         PistolItem.damageMultiplierMin = (float)(INSTANCE.pistolDamageMin / maxEnergy);
         PistolItem.damageMultiplierMax = (float)(INSTANCE.pistolDamageMax / maxEnergy);
         PistolItem.reloadDuration = (int)INSTANCE.pistolReloadDuration;
 
+        BlunderbussItem.bulletStdDev = (float)Math.toRadians(INSTANCE.blunderbussBulletStdDev);
+        BlunderbussItem.bulletSpeed = (float)(INSTANCE.blunderbussBulletSpeed / 20);
+        BlunderbussItem.pelletCount = (int)(INSTANCE.blunderbussPelletCount);
+        maxEnergy = BlunderbussItem.bulletSpeed * BlunderbussItem.bulletSpeed;
+        BlunderbussItem.damageMultiplierMin = (float)(INSTANCE.blunderbussDamageMin / maxEnergy);
+        BlunderbussItem.damageMultiplierMax = (float)(INSTANCE.blunderbussDamageMax / maxEnergy);
+        BlunderbussItem.reloadDuration = (int)INSTANCE.blunderbussReloadDuration;
+
         logger.info("Configuration has been loaded");
     }
 
     private void setDefaults() {
-        //general values
+        //General values
         bulletMaxDistance = 256;
-        //musket values
+        //Musket values
         musketBulletStdDev = 1;
         musketBulletSpeed = 220;
         musketDamageMin = 27.5;
         musketDamageMax = 28;
-        musketReloadDuration = 300;
-        //rifle values
+        musketReloadDuration = 30;
+        //Rifle values
         rifleBulletStdDev = 0.2;
         rifleBulletSpeed = 230;
         rifleDamageMin = 27;
         rifleDamageMax = 28;
-        rifleReloadDuration = 400;
-        //pistol values
+        rifleReloadDuration = 40;
+        //Pistol values
         pistolBulletStdDev = 1.5;
         pistolBulletSpeed = 140;
         pistolDamageMin = 14;
         pistolDamageMax = 15;
-        pistolReloadDuration = 240;
+        pistolReloadDuration = 24;
+        //Blunderbuss values
+        blunderbussBulletStdDev = 4;
+        blunderbussBulletSpeed = 100;
+        blunderbussPelletCount = 12;
+        blunderbussDamageMin = 9;
+        blunderbussDamageMax = 11;
+        blunderbussReloadDuration = 24; //240
     }
 
     private void load() {
@@ -161,7 +186,7 @@ public class Config {
                     case "rifleReloadDuration":
                         rifleReloadDuration = value;
                         break;
-                    //pistol values
+                    //Pistol values
                     case "pistolBulletStdDev":
                         pistolBulletStdDev = value;
                         break;
@@ -174,9 +199,28 @@ public class Config {
                     case "pistolDamageMax":
                         pistolDamageMax = value;
                         break;
-                        case "pistolReloadDuration":
-                            pistolReloadDuration = value;
-                            break;
+                    case "pistolReloadDuration":
+                        pistolReloadDuration = value;
+                        break;
+                    //Blunderbuss values
+                    case "blunderbussBulletStdDev":
+                        blunderbussBulletStdDev = value;
+                        break;
+                    case "blunderbussBulletSpeed":
+                        blunderbussBulletSpeed = value;
+                        break;
+                    case "blunderbussPelletCount":
+                        blunderbussPelletCount = value;
+                        break;
+                    case "blunderbussDamageMin":
+                        blunderbussDamageMin = value;
+                        break;
+                    case "blunderbussDamageMax":
+                        blunderbussDamageMax = value;
+                        break;
+                    case "blunderbussReloadDuration":
+                        blunderbussReloadDuration = value;
+                        break;
                     default:
                         logger.warn(errorPrefix+"unrecognized parameter name: "+key);
                     }
@@ -243,6 +287,20 @@ public class Config {
             writer.write("pistolDamageMax = "+pistolDamageMax+"\n");
             writer.write("# Reload duration\n");
             writer.write("pistolReloadDuration = "+pistolReloadDuration+"\n");
+            writer.write("# Blunderbuss\n");
+            writer.write("\n");
+            writer.write("# Standard deviation of bullet spread (in degrees)\n");
+            writer.write("blunderbussBulletStdDev = "+blunderbussBulletStdDev+"\n");
+            writer.write("# Muzzle velocity of bullet (in blocks per second)\n");
+            writer.write("blunderbussBulletSpeed = "+blunderbussBulletSpeed+"\n");
+            writer.write("# Number of projectiles fired in one shot\n");
+            writer.write("blunderbussPelletCount = "+blunderbussPelletCount+"\n");
+            writer.write("# Minimum damage at point-blank range\n");
+            writer.write("blunderbussDamageMin = "+blunderbussDamageMin+"\n");
+            writer.write("# Maximum damage at point-blank range\n");
+            writer.write("blunderbussDamageMax = "+blunderbussDamageMax+"\n");
+            writer.write("# Reload duration\n");
+            writer.write("blunderbussReloadDuration = "+blunderbussReloadDuration+"\n");
 
         } catch (IOException e) {
             logger.warn("Could not save configuration file: ", e);

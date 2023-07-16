@@ -20,6 +20,7 @@ public class ClientSetup implements ClientModInitializer {
         };
         FabricModelPredicateProviderRegistry.register(Items.MUSKET, new ResourceLocation("loaded"), loaded);
         FabricModelPredicateProviderRegistry.register(Items.RIFLE, new ResourceLocation("loaded"), loaded);
+        FabricModelPredicateProviderRegistry.register(Items.BLUNDERBUSS, new ResourceLocation("loaded"), loaded);
         FabricModelPredicateProviderRegistry.register(Items.MUSKET_WITH_BAYONET, new ResourceLocation("loaded"), loaded);
         FabricModelPredicateProviderRegistry.register(Items.PISTOL, new ResourceLocation("loaded"), loaded);
 

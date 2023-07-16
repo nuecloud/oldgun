@@ -8,7 +8,7 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 
-public class RifleItem extends GunItem {
+public class BlunderbussItem extends GunItem {
     public static final int DURABILITY = 100;
     public static final int BAYONET_DAMAGE = 4;
     public static final float BAYONET_SPEED = -2.0f;
@@ -23,18 +23,9 @@ public class RifleItem extends GunItem {
 
     public final Multimap<Attribute, AttributeModifier> bayonetAttributeModifiers;
 
-    public RifleItem(Properties properties, boolean withBayonet) {
+    public BlunderbussItem(Properties properties, boolean withBayonet) {
         super(properties.defaultDurability(DURABILITY));
-        if (withBayonet) {
-            ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
-            builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(
-                BASE_ATTACK_DAMAGE_UUID, "Weapon modifier", BAYONET_DAMAGE, AttributeModifier.Operation.ADDITION));
-            builder.put(Attributes.ATTACK_SPEED, new AttributeModifier(
-                BASE_ATTACK_SPEED_UUID, "Weapon modifier", BAYONET_SPEED, AttributeModifier.Operation.ADDITION));
-            bayonetAttributeModifiers = builder.build();
-        } else {
             bayonetAttributeModifiers = null;
-        }
     }
 
     @Override
@@ -50,6 +41,7 @@ public class RifleItem extends GunItem {
     public int pelletCount() {
         return pelletCount;
     }
+
 
     @Override
     public float damageMultiplierMin() {

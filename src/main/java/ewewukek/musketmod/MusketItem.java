@@ -16,6 +16,7 @@ public class MusketItem extends GunItem {
     public static final float BAYONET_SPEED = -2.0f;
     public static float bulletStdDev;
     public static float bulletSpeed;
+    public static int pelletCount;
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
     public static int reloadDuration;
@@ -46,6 +47,10 @@ public class MusketItem extends GunItem {
     @Override
     public float bulletSpeed() {
         return bulletSpeed;
+    }
+    @Override
+    public int pelletCount() {
+        return pelletCount;
     }
 
     @Override

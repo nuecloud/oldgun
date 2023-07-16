@@ -246,6 +246,9 @@ public class BulletEntity extends AbstractHurtingProjectile {
                 }
             }
         }
+        if (resultEntity != null && resultEntity.getType() == this.getType()) {
+            return null;
+        }
 
         return resultEntity != null ? new EntityHitResult(resultEntity, resultVec) : null;
     }
