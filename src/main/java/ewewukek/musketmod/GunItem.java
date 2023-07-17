@@ -74,26 +74,6 @@ public abstract class GunItem extends Item {
         if (!canUseFrom(player, hand)) return super.use(worldIn, player, hand);
         ItemStack stack = player.getItemInHand(hand);
 
-        //my nonsense
-
-/*        System.out.println("test1 " + player.getInventory().selected);
-        System.out.println("test2 " + player.getInventory().getItem(0));
-
-        if(player.getInventory().getItem(0).is(this.asItem())) {
-            System.out.println("test3");
-        }*/
-
-/*        player.getCooldowns().addCooldown(this, 50);
-        if(player.getCooldowns().isOnCooldown(this)) {
-            System.out.println("amog");
-        }
-
-        if(player.getCooldowns().isOnCooldown(this.asItem())) {
-            System.out.println("amog");
-        }*/
-
-        //nonsense end
-
         boolean creative = player.getAbilities().instabuild;
 
         if (player.isEyeInFluid(FluidTags.WATER) && !creative) {
