@@ -4,12 +4,14 @@ import java.util.Random;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
+import net.minecraft.network.chat.ClickEvent;
 import net.minecraft.network.chat.TextComponent;
 import net.minecraft.sounds.SoundEvent;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.LivingEntity;
@@ -62,11 +64,36 @@ public abstract class GunItem extends Item {
         return true;
     }
 
+/*    @Override
+    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
+        System.out.println(((Player)entity).getAttackStrengthScale(5.0f));
+    }*/
+
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
         if (!canUseFrom(player, hand)) return super.use(worldIn, player, hand);
-
         ItemStack stack = player.getItemInHand(hand);
+
+        //my nonsense
+
+/*        System.out.println("test1 " + player.getInventory().selected);
+        System.out.println("test2 " + player.getInventory().getItem(0));
+
+        if(player.getInventory().getItem(0).is(this.asItem())) {
+            System.out.println("test3");
+        }*/
+
+/*        player.getCooldowns().addCooldown(this, 50);
+        if(player.getCooldowns().isOnCooldown(this)) {
+            System.out.println("amog");
+        }
+
+        if(player.getCooldowns().isOnCooldown(this.asItem())) {
+            System.out.println("amog");
+        }*/
+
+        //nonsense end
+
         boolean creative = player.getAbilities().instabuild;
 
         if (player.isEyeInFluid(FluidTags.WATER) && !creative) {
