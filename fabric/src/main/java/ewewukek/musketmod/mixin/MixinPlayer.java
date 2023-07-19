@@ -36,7 +36,7 @@ public abstract class MixinPlayer {
                 if (item instanceof PistolItem) {
                     this.getCooldowns().addCooldown(inventory.getItem(inventory.selected).getItem(), 60);
                 }
-                else {
+                else if (item instanceof GunItem){
                     this.getCooldowns().addCooldown(item, 80);
                 }
             }

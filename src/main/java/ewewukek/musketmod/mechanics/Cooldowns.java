@@ -8,8 +8,5 @@ import java.util.HashMap;
 
 public class Cooldowns {
     public static HashMap<Player, Integer> playerSelectedMap = new HashMap<>();
-    public static void setLastTickSelected(Player player, int slot) {
-        playerSelectedMap.put(player, slot);
-    }
 
 }

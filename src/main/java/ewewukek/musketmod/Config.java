@@ -87,32 +87,32 @@ public class Config {
 
     private void setDefaults() {
         //General values
-        bulletMaxDistance = 256;
+        bulletMaxDistance = 384;
         //Musket values
         musketBulletStdDev = 1;
         musketBulletSpeed = 220;
         musketDamageMin = 27.5;
         musketDamageMax = 28;
-        musketReloadDuration = 30;
+        musketReloadDuration = 320; //300
         //Rifle values
         rifleBulletStdDev = 0.2;
         rifleBulletSpeed = 230;
         rifleDamageMin = 27;
         rifleDamageMax = 28;
-        rifleReloadDuration = 40;
+        rifleReloadDuration = 400;
         //Pistol values
         pistolBulletStdDev = 1.5;
         pistolBulletSpeed = 140;
         pistolDamageMin = 14;
         pistolDamageMax = 15;
-        pistolReloadDuration = 24;
+        pistolReloadDuration = 260;
         //Blunderbuss values
         blunderbussBulletStdDev = 4;
         blunderbussBulletSpeed = 100;
         blunderbussPelletCount = 12;
         blunderbussDamageMin = 9;
         blunderbussDamageMax = 11;
-        blunderbussReloadDuration = 24; //240
+        blunderbussReloadDuration = 440; //400
     }
 
     private void load() {

@@ -27,10 +27,8 @@ import net.minecraft.world.scores.Scoreboard;
 import net.minecraft.world.scores.criteria.ObjectiveCriteria;
 
 public abstract class GunItem extends Item {
-    public static final int LOADING_STAGE_1 = 5;
-    public static final int LOADING_STAGE_2 = 10;
-    public static final int LOADING_STAGE_3 = 20;
     public static int RELOAD_DURATION;
+
 
     // for RenderHelper
     public static ItemStack activeMainHandStack;
@@ -50,6 +48,19 @@ public abstract class GunItem extends Item {
     public abstract boolean twoHanded();
     public abstract boolean ignoreInvulnerableTime();
 
+    int STAGE_1_TICKS = 2*(reloadDuration()/8);
+    int STAGE_2_TICKS = 2*(reloadDuration()/8);
+    int STAGE_3_TICKS = 4*(reloadDuration()/8);
+
+    int STAGE_1_PLAYS = (STAGE_1_TICKS >= 20)? STAGE_1_TICKS/20 : 1;
+    int STAGE_2_PLAYS = (STAGE_2_TICKS >= 20)? STAGE_2_TICKS/20 : 1;
+    int STAGE_3_PLAYS = (STAGE_3_TICKS >= 20)? STAGE_3_TICKS/20 : 1;
+
+    int stage1Start = 0;
+    int stage2Start = STAGE_1_PLAYS + stage1Start;
+    int stage3Start = STAGE_2_PLAYS + STAGE_1_PLAYS + stage1Start;
+    int stage4Start = STAGE_3_PLAYS + STAGE_2_PLAYS + STAGE_1_PLAYS + stage1Start;
+
     public boolean canUseFrom(Player player, InteractionHand hand) {
         if (hand == InteractionHand.MAIN_HAND) {
             return true;
@@ -63,11 +74,6 @@ public abstract class GunItem extends Item {
         }
         return true;
     }
-
-/*    @Override
-    public void inventoryTick(ItemStack itemStack, Level level, Entity entity, int i, boolean bl) {
-        System.out.println(((Player)entity).getAttackStrengthScale(5.0f));
-    }*/
 
     @Override
     public InteractionResultHolder<ItemStack> use(Level worldIn, Player player, InteractionHand hand) {
@@ -132,12 +138,39 @@ public abstract class GunItem extends Item {
         setLoadingStage(stack, 0);
     }
 
+    int a = 0;
+    int b = 0;
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack stack, int timeLeft) {
+
         int usingDuration = getUseDuration(stack) - timeLeft;
         int loadingStage = getLoadingStage(stack);
 
-        if (loadingStage == 1 && usingDuration >= LOADING_STAGE_1) {
+        if (usingDuration < reloadDuration() && world.isClientSide) {
+            if (a == 20 && b <= stage2Start) {
+                a = 0;
+                b++;
+                entity.playSound(Sounds.MUSKET_LOAD_0, 0.8f, 1);
+                if (b == stage2Start) setLoadingStage(stack, 2);
+
+            } else if (a == 20 && b <= stage3Start) {
+                a = 0;
+                b++;
+                entity.playSound(Sounds.MUSKET_LOAD_1, 0.8f, 1);
+                if (b == stage3Start) setLoadingStage(stack, 3);
+
+            } else if (a == 20 && b <= stage4Start) {
+                a = 0;
+                b++;
+                entity.playSound(Sounds.MUSKET_LOAD_2, 0.8f, 1);
+                if (b == stage4Start) {
+                    setLoadingStage(stack, 4);
+                }
+            }
+            a++;
+        }
+
+/*        if (loadingStage == 1 && usingDuration >= LOADING_STAGE_1) {
             entity.playSound(Sounds.MUSKET_LOAD_0, 0.8f, 1);
             setLoadingStage(stack, 2);
 
@@ -148,7 +181,7 @@ public abstract class GunItem extends Item {
         } else if (loadingStage == 3 && usingDuration >= LOADING_STAGE_3) {
             entity.playSound(Sounds.MUSKET_LOAD_2, 0.8f, 1);
             setLoadingStage(stack, 4);
-        }
+        }*/
 
         if (world.isClientSide && entity instanceof Player) {
             setActiveStack(entity.getUsedItemHand(), stack);
@@ -166,6 +199,8 @@ public abstract class GunItem extends Item {
                     if (ammoStack.isEmpty()) player.getInventory().removeItem(ammoStack);
                 }
             }
+            a = 0;
+            b = 0;
 
             // played on server
             world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), Sounds.MUSKET_READY, entity.getSoundSource(), 0.8f, 1);
@@ -206,7 +241,7 @@ public abstract class GunItem extends Item {
 
         Vec3 origin = new Vec3(shooter.getX(), shooter.getEyeY(), shooter.getZ());
 
-        for (int a = 0; a <= pelletCount(); a++) {
+        for (int a = 0; a < pelletCount(); a++) {
             float angle = (float) Math.PI * 2 * random.nextFloat();
             float gaussian = Math.abs((float) random.nextGaussian());
             if (gaussian > 4) gaussian = 4;
