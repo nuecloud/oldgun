@@ -1,0 +1,14 @@
+{
+  "type": "crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "musketmod:musket"
+    },
+    {
+      "item": "musketmod:cleaning_rod"
+    }
+  ],
+  "result": {
+    "item": "musketmod:musket"
+  }
+}

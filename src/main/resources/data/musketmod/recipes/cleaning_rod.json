@@ -1,0 +1,19 @@
+{
+  "type": "crafting_shaped",
+  "pattern": [
+    "W  ",
+    " S ",
+    "  S"
+  ],
+  "key": {
+    "W": {
+      "item": "minecraft:wool"
+    },
+    "S": {
+      "item": "minecraft:stick"
+    }
+  },
+  "result": {
+    "item": "musketmod:cleaning_rod"
+  }
+}
