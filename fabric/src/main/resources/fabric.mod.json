@@ -3,10 +3,11 @@
   "id": "musketmod",
   "version": "${version}",
   "name": "Musket Mod",
-  "description": "Small mod that adds craftable muskets and pistols",
+  "description": "Small mod that adds craftable flintlock guns",
   "icon": "assets/musketmod/icon.png",
   "authors": [
-    "ewewukek"
+    "ewewukek",
+    "SirWashington"
   ],
   "license": "MIT",
   "environment": "*",
