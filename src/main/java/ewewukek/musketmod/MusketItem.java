@@ -11,7 +11,7 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 
 public class MusketItem extends GunItem {
-    public static final int DURABILITY = 150;
+    public static final int durability = 35;
     public static final int BAYONET_DAMAGE = 4;
     public static final float BAYONET_SPEED = -2.0f;
     public static float bulletStdDev;
@@ -26,7 +26,7 @@ public class MusketItem extends GunItem {
     public final Multimap<Attribute, AttributeModifier> bayonetAttributeModifiers;
 
     public MusketItem(Item.Properties properties, boolean withBayonet) {
-        super(properties.defaultDurability(DURABILITY));
+        super(properties.defaultDurability(durability));
         if (withBayonet) {
             ImmutableMultimap.Builder<Attribute, AttributeModifier> builder = ImmutableMultimap.builder();
             builder.put(Attributes.ATTACK_DAMAGE, new AttributeModifier(
@@ -67,6 +67,11 @@ public class MusketItem extends GunItem {
     public int reloadDuration() {
         return reloadDuration;
     }
+    @Override
+    public int durability() {
+        return durability;
+    }
+
 
     @Override
     public SoundEvent fireSound() {

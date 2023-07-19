@@ -7,7 +7,7 @@
   ],
   "key": {
     "W": {
-      "item": "minecraft:wool"
+      "tag": "minecraft:wool"
     },
     "S": {
       "item": "minecraft:stick"

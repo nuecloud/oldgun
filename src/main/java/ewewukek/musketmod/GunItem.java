@@ -44,6 +44,7 @@ public abstract class GunItem extends Item {
     public abstract float damageMultiplierMin();
     public abstract float damageMultiplierMax();
     public abstract int reloadDuration();
+    public abstract int durability();
     public abstract SoundEvent fireSound();
     public abstract boolean twoHanded();
     public abstract boolean ignoreInvulnerableTime();
@@ -107,7 +108,7 @@ public abstract class GunItem extends Item {
                 boolean isRightHand = arm == HumanoidArm.RIGHT;
                 Vec3 side = Vec3.directionFromRotation(0, player.getYRot() + (isRightHand ? 90 : -90));
                 Vec3 down = Vec3.directionFromRotation(player.getXRot() + 90, player.getYRot());
-                fire(player, front, side.add(down).scale(0.15));
+                fire(player, stack, front, side.add(down).scale(0.15));
             }
             player.playSound(fireSound(), 3.5f, 1);
 
@@ -170,19 +171,6 @@ public abstract class GunItem extends Item {
             a++;
         }
 
-/*        if (loadingStage == 1 && usingDuration >= LOADING_STAGE_1) {
-            entity.playSound(Sounds.MUSKET_LOAD_0, 0.8f, 1);
-            setLoadingStage(stack, 2);
-
-        } else if (loadingStage == 2 && usingDuration >= LOADING_STAGE_2) {
-            entity.playSound(Sounds.MUSKET_LOAD_1, 0.8f, 1);
-            setLoadingStage(stack, 3);
-
-        } else if (loadingStage == 3 && usingDuration >= LOADING_STAGE_3) {
-            entity.playSound(Sounds.MUSKET_LOAD_2, 0.8f, 1);
-            setLoadingStage(stack, 4);
-        }*/
-
         if (world.isClientSide && entity instanceof Player) {
             setActiveStack(entity.getUsedItemHand(), stack);
             return;
@@ -231,13 +219,23 @@ public abstract class GunItem extends Item {
         return 72000;
     }
 
-    public void fire(LivingEntity shooter, Vec3 direction) {
-        fire(shooter, direction, Vec3.ZERO);
+    public void fire(LivingEntity shooter, ItemStack stack, Vec3 direction) {
+        fire(shooter, stack, direction, Vec3.ZERO);
     }
 
-    public void fire(LivingEntity shooter, Vec3 direction, Vec3 smokeOriginOffset) {
+    public void fire(LivingEntity shooter, ItemStack stack,  Vec3 direction, Vec3 smokeOriginOffset) {
         Random random = shooter.getRandom();
         Level level = shooter.level;
+
+        //Durability debuffs
+        int remainingDurability = durability() - stack.getDamageValue();
+        float effectivenessCoefficient = 1;
+        float stdDevDebuff = 1;
+        if (remainingDurability <= 10) {
+            effectivenessCoefficient = 0.7f;
+            stdDevDebuff = 2;
+        }
+
 
         Vec3 origin = new Vec3(shooter.getX(), shooter.getEyeY(), shooter.getZ());
 
@@ -246,7 +244,7 @@ public abstract class GunItem extends Item {
             float gaussian = Math.abs((float) random.nextGaussian());
             if (gaussian > 4) gaussian = 4;
 
-            float spread = bulletStdDev() * gaussian;
+            float spread = stdDevDebuff * bulletStdDev() * gaussian;
 
             // a plane perpendicular to direction
             Vec3 n1;
@@ -269,10 +267,10 @@ public abstract class GunItem extends Item {
             BulletEntity bullet = new BulletEntity(level);
             bullet.setOwner(shooter);
             bullet.setPos(origin);
-            bullet.setInitialSpeed(bulletSpeed());
+            bullet.setInitialSpeed(effectivenessCoefficient * bulletSpeed());
             bullet.setDeltaMovement(motion);
             float t = random.nextFloat();
-            bullet.damageMultiplier = t * damageMultiplierMin() + (1 - t) * damageMultiplierMax();
+            bullet.damageMultiplier = effectivenessCoefficient * (t * damageMultiplierMin() + (1 - t) * damageMultiplierMax());
             bullet.ignoreInvulnerableTime = ignoreInvulnerableTime();
 
             level.addFreshEntity(bullet);
