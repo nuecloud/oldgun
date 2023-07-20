@@ -155,7 +155,7 @@ public abstract class GunItem extends Item {
                 b++;
                 entity.playSound(Sounds.MUSKET_LOAD_1, 0.8f, 1);
 
-            } else if (a == 20 && b < stage4Start) {
+            } else if (a == 20) {
                 a = 0;
                 b++;
                 entity.playSound(Sounds.MUSKET_LOAD_2, 0.8f, 1);
