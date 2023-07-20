@@ -5,12 +5,6 @@
       "item": "minecraft:iron_nugget"
     },
     {
-      "item": "minecraft:iron_nugget"
-    },
-    {
-      "item": "minecraft:iron_nugget"
-    },
-    {
       "item": "minecraft:gunpowder"
     },
     {
@@ -18,7 +12,6 @@
     }
   ],
   "result": {
-    "item": "musketmod:cartridge",
-    "count": 3
+    "item": "musketmod:cartridge"
   }
 }

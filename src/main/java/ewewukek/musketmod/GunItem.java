@@ -143,7 +143,7 @@ public abstract class GunItem extends Item {
     int b = 0;
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack stack, int timeLeft) {
-
+        
         int usingDuration = getUseDuration(stack) - timeLeft;
         int loadingStage = getLoadingStage(stack);
 
@@ -337,6 +337,23 @@ public abstract class GunItem extends Item {
             }
 
             return ItemStack.EMPTY;
+        }
+    }
+
+    public static Item ammoType(Player player) {
+        if (isAmmo(player.getItemBySlot(EquipmentSlot.OFFHAND))) {
+            return player.getItemBySlot(EquipmentSlot.OFFHAND).getItem();
+
+        } else if (isAmmo(player.getItemBySlot(EquipmentSlot.MAINHAND))) {
+            return player.getItemBySlot(EquipmentSlot.MAINHAND).getItem();
+
+        } else {
+            for (int i = 0; i != player.getInventory().getContainerSize(); ++i) {
+                ItemStack itemstack = player.getInventory().getItem(i);
+                if (isAmmo(itemstack)) return itemstack.getItem();
+            }
+
+            return ItemStack.EMPTY.getItem();
         }
     }
 
