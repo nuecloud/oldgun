@@ -3,13 +3,13 @@ package ewewukek.musketmod;
 import net.minecraft.sounds.SoundEvent;
 
 public class PistolItem extends GunItem {
-    public static final int durability = 35;
     public static float bulletStdDev;
     public static float bulletSpeed;
     public static int pelletCount;
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
     public static int reloadDuration;
+    public static int durability;
 
 
     public PistolItem(Properties properties) {

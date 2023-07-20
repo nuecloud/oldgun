@@ -11,7 +11,6 @@ import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.item.Item;
 
 public class MusketItem extends GunItem {
-    public static final int durability = 35;
     public static final int BAYONET_DAMAGE = 4;
     public static final float BAYONET_SPEED = -2.0f;
     public static float bulletStdDev;
@@ -20,6 +19,7 @@ public class MusketItem extends GunItem {
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
     public static int reloadDuration;
+    public static int durability;
 
 
 

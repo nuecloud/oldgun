@@ -143,7 +143,7 @@ public abstract class GunItem extends Item {
     int b = 0;
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack stack, int timeLeft) {
-        
+
         int usingDuration = getUseDuration(stack) - timeLeft;
         int loadingStage = getLoadingStage(stack);
 

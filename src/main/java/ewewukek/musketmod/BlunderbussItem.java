@@ -7,9 +7,6 @@ import net.minecraft.world.entity.ai.attributes.Attribute;
 import net.minecraft.world.entity.ai.attributes.AttributeModifier;
 
 public class BlunderbussItem extends GunItem {
-    public static final int durability = 50;
-    public static final int BAYONET_DAMAGE = 4;
-    public static final float BAYONET_SPEED = -2.0f;
 
     public static float bulletStdDev;
     public static float bulletSpeed;
@@ -17,6 +14,8 @@ public class BlunderbussItem extends GunItem {
     public static float damageMultiplierMin;
     public static float damageMultiplierMax;
     public static int reloadDuration;
+    public static int durability;
+
 
 
     public final Multimap<Attribute, AttributeModifier> bayonetAttributeModifiers;
@@ -74,9 +73,4 @@ public class BlunderbussItem extends GunItem {
         return false;
     }
 
-    @Override
-    public Multimap<Attribute, AttributeModifier> getDefaultAttributeModifiers(EquipmentSlot slot) {
-        return slot == EquipmentSlot.MAINHAND && bayonetAttributeModifiers != null
-                ? bayonetAttributeModifiers : super.getDefaultAttributeModifiers(slot);
-    }
 }
