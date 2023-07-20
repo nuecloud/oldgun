@@ -122,7 +122,7 @@ public abstract class GunItem extends Item {
             return InteractionResultHolder.consume(stack);
 
         } else if (haveAmmo) {
-            setLoadingStage(stack, 1);
+            //setLoadingStage(stack, 1);
 
             player.startUsingItem(hand);
             if (worldIn.isClientSide) setActiveStack(hand, stack);
@@ -144,29 +144,21 @@ public abstract class GunItem extends Item {
     @Override
     public void onUseTick(Level world, LivingEntity entity, ItemStack stack, int timeLeft) {
 
-        int usingDuration = getUseDuration(stack) - timeLeft;
-        int loadingStage = getLoadingStage(stack);
-
-        if (usingDuration < reloadDuration() && world.isClientSide) {
-            if (a == 20 && b <= stage2Start) {
+        if (b < stage4Start && world.isClientSide) {
+            if (a == 20 && b < stage2Start) {
                 a = 0;
                 b++;
                 entity.playSound(Sounds.MUSKET_LOAD_0, 0.8f, 1);
-                if (b == stage2Start) setLoadingStage(stack, 2);
 
-            } else if (a == 20 && b <= stage3Start) {
+            } else if (a == 20 && b < stage3Start) {
                 a = 0;
                 b++;
                 entity.playSound(Sounds.MUSKET_LOAD_1, 0.8f, 1);
-                if (b == stage3Start) setLoadingStage(stack, 3);
 
-            } else if (a == 20 && b <= stage4Start) {
+            } else if (a == 20 && b < stage4Start) {
                 a = 0;
                 b++;
                 entity.playSound(Sounds.MUSKET_LOAD_2, 0.8f, 1);
-                if (b == stage4Start) {
-                    setLoadingStage(stack, 4);
-                }
             }
             a++;
         }
@@ -176,7 +168,7 @@ public abstract class GunItem extends Item {
             return;
         }
 
-        if (usingDuration >= reloadDuration() && !isLoaded(stack)) {
+        if (b == stage4Start && !isLoaded(stack)) {
             if (entity instanceof Player) {
                 Player player = (Player)entity;
                 if (!player.getAbilities().instabuild) {
@@ -188,7 +180,7 @@ public abstract class GunItem extends Item {
                 }
             }
             a = 0;
-            b = 0;
+            b = 255;
 
             // played on server
             world.playSound(null, entity.getX(), entity.getY(), entity.getZ(), Sounds.MUSKET_READY, entity.getSoundSource(), 0.8f, 1);
@@ -226,6 +218,7 @@ public abstract class GunItem extends Item {
     public void fire(LivingEntity shooter, ItemStack stack,  Vec3 direction, Vec3 smokeOriginOffset) {
         Random random = shooter.getRandom();
         Level level = shooter.level;
+        b = 0;
 
         //Durability debuffs
         int remainingDurability = durability() - stack.getDamageValue();
