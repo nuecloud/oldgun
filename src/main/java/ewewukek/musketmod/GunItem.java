@@ -1,6 +1,7 @@
 package ewewukek.musketmod;
 
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import ewewukek.musketmod.networking.ModPackets;
 import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
@@ -10,7 +11,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.particles.ParticleTypes;
 import net.minecraft.network.FriendlyByteBuf;
 import net.minecraft.network.chat.ClickEvent;
-import net.minecraft.network.chat.TextComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvent;
@@ -18,6 +19,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.tags.FluidTags;
 import net.minecraft.util.Mth;
+import net.minecraft.util.RandomSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.Entity;
@@ -30,6 +32,7 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.LevelEvent;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.levelgen.ThreadSafeLegacyRandomSource;
 import net.minecraft.world.phys.Vec3;
 import net.minecraft.world.scores.Objective;
 import net.minecraft.world.scores.Score;
@@ -228,8 +231,8 @@ public abstract class GunItem extends Item {
     }
 
     public void fire(LivingEntity shooter, ItemStack stack,  Vec3 direction, Vec3 smokeOriginOffset) {
-        Random random = shooter.getRandom();
-        Level level = shooter.level;
+        RandomSource random = new ThreadSafeLegacyRandomSource(shooter.getRandom().nextLong());
+        Level level = shooter.level();
         b = 0;
 
         //Durability debuffs
@@ -285,7 +288,7 @@ public abstract class GunItem extends Item {
     }
 
     public static void fireParticles(Level world, Vec3 origin, Vec3 direction) {
-        Random random = world.getRandom();
+        RandomSource random = new ThreadSafeLegacyRandomSource(world.getRandom().nextLong());
 
         for (int i = 0; i != 10; ++i) {
             double t = Math.pow(random.nextFloat(), 1.5);
@@ -302,7 +305,7 @@ public abstract class GunItem extends Item {
         Scoreboard board = player.getScoreboard();
         Objective objective = board.getObjective(NAME);
         if (objective == null) {
-            objective = board.addObjective(NAME, ObjectiveCriteria.DUMMY, new TextComponent(NAME), ObjectiveCriteria.RenderType.INTEGER);
+            objective = board.addObjective(NAME, ObjectiveCriteria.DUMMY, Component.literal(NAME), ObjectiveCriteria.RenderType.INTEGER);
         }
         Score score = board.getOrCreatePlayerScore(player.getScoreboardName(), objective);
         score.increment();
